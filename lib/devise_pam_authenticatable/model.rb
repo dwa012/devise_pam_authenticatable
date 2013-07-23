@@ -19,17 +19,17 @@ module Devise
 
      # Checks if a resource is valid upon authentication.
      def valid_pam_authentication?(password)
-       Devise::PamAdapter.valid_credentials?(self.email, password)
+       Devise::PamAdapter.valid_credentials?(self.username, password)
      end
      
      module ClassMethods
        def authenticate_with_pam(attributes={})
-         return nil unless attributes[:email].present?
+         return nil unless attributes[:username].present?
 
-         resource = scoped.where(:email => attributes[:email]).first
+         resource = scoped.where(:username => attributes[:username]).first
          if resource.blank?
            resource = new
-           resource[:email] = attributes[:email]
+           resource[:username] = attributes[:username]
            #resource[:password] = attributes[:password]
          end
 
